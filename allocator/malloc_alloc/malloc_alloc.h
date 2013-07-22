@@ -1,94 +1,149 @@
-// //============================================================================
-// // Name        : malloc_alloc.h
-// // Author      : Bingjie Lv
-// // Version     :
-// // Copyright   : Your copyright notice
-// // Description :  first level numb::allocator ;using malloc
-// //============================================================================
+//============================================================================
+// Name        : malloc_alloc.h
+// Author      : Bingjie Lv
+// Version     : 
+// Copyright   : Your copyright notice
+// Description : standard interface to  STL Standards
+//============================================================================
 
 #include <cstddef>	//for size_t
 #include <cstdlib>	//for malloc,dealloc,etc.
-#include <cstdio>	//for fprintf
-#ifndef _MALL_ALLOC_H_
-#define _MALL_ALLOC_H_
+#include <cstdio>
+#include <new>
+#ifndef _mmalloc_alloc_H
+#define	_mmalloc_alloc_H
 namespace numb
 {
-	class _malloc_alloc
+template <class T> class malloc_alloc
+{
+public:
+  typedef T                 value_type;
+  typedef value_type*       pointer;
+  typedef const value_type* const_pointer;
+  typedef value_type&       reference;
+  typedef const value_type& const_reference;
+  typedef std::size_t       size_type;
+  typedef std::ptrdiff_t    difference_type;
+  
+  template <class U> 
+  struct rebind { typedef malloc_alloc<U> other; };
+
+  malloc_alloc() {}
+  malloc_alloc(const malloc_alloc&) {}
+  template <class U> 
+  malloc_alloc(const malloc_alloc<U>&) {}
+  ~malloc_alloc() {}
+
+  pointer address(reference x) const { return &x; }
+  const_pointer address(const_reference x) const { return x;}
+  //åˆ†é…
+  pointer allocate(size_type n, const_pointer = 0) 
+  {
+    size_t _t=(n * sizeof(T));
+	void* p = std::malloc(_t);
+    if (!p)
+       p=oom_malloc(_t);
+    return static_cast<pointer>(p);
+  }
+  //é‡Šæ”¾
+  void deallocate(pointer p, size_type ) 
+  { 
+	free(p);
+  }
+  //æœ€å¤§å®¹é‡
+  size_type max_size() const
+  { 
+    return static_cast<size_type>(-1) / sizeof(T);
+  }
+  //æ„é€ 
+  void construct(pointer p, const value_type& x) 
+  { 
+    new(p) value_type(x); 
+  }
+  //ææ„
+  void destroy(pointer p) { p->~value_type(); }
+   //é‡é…ç½®å†…å­˜
+  void* reallocate(void* _p,size_t _n)
+  {
+	void *_temp=realloc(_p,_n);
+	if(_temp==0)	//åˆæ¬¡åˆ†é…å¤±è´¥ï¼Œè°ƒç”¨handler
+		_temp=oom_realloc(_p,_n);
+	return _temp;
+  }
+  //è®¾ç½®å¤„ç†å¥æŸ„
+  static void (* set_malloc_handler(void (*f)()))()
+  {
+    void (* _old)() = _malloc_handler;
+	_malloc_handler = f;
+	return(_old);
+  }
+private:
+  void operator=(const malloc_alloc&);
+  void * oom_malloc(size_t);
+  void * oom_realloc(void*,size_t);
+  static void (* _malloc_handler)();
+};
+template<class T>
+void (* malloc_alloc<T>::_malloc_handler)()= 0;//åˆå§‹åŒ–ä¸º0
+template<class T>
+void * malloc_alloc<T>::oom_malloc(size_t n)
+{
+	void (*my_handler)();
+	void *temp;
+	while(1)
 	{
-		private:
-			//Ë½ÓĞº¯Êı£¬ÄÚ²¿´¦ÀíÄÚ´æ²»×ã
-			static void * _handle_oom_malloc(size_t);
-			static void * _handle_oom_realloc(void*,size_t);
-			static void (* _malloc_handler)();
-		public:
-			//·ÖÅäÄÚ´æ
-			static void* allocate(size_t _n)
-			{
-				void *_temp=malloc(_n);
-				if(_n==0)//³õ´Î·ÖÅäÊ§°Ü£¬µ÷ÓÃhandler
-				{
-					_temp=_handle_oom_malloc(_n);
-				}
-				return _temp;
-			}
-			//ÊÍ·ÅÄÚ´æ
-			static void deallocate(void* _p)
-			{
-				free(_p);
-			}
-			//ÖØÅäÖÃÄÚ´æ
-			static void* reallocate(void* _p,size_t _n)
-			{
-				void *_temp=realloc(_p,_n);
-				if(_n==0)	//³õ´Î·ÖÅäÊ§°Ü£¬µ÷ÓÃhandler
-					_temp=_handle_oom_realloc(_p,_n);
-				return _temp;
-			}
-			//ÉèÖÃ´¦Àí¾ä±ú
-			static void (* _set_malloc_handler(void (*_f)()))()
-			{
-				void (* _old)() = _malloc_handler;
-				_malloc_handler = _f;
-				return(_old);
-			}
-	};
-	void (* _malloc_alloc::_malloc_handler)()= 0;//³õÊ¼»¯Îª0
-	void * _malloc_alloc::_handle_oom_malloc(size_t n)
-	{
-		void (*my_handler)();
-		void *temp;
-		while(1)
+		my_handler=_malloc_handler;
+		if(my_handler==0)//ç”¨æˆ·æ²¡è®¾å®š
 		{
-			my_handler=_malloc_handler;
-			if(my_handler==0)//ÓÃ»§Ã»Éè¶¨
-			{
-				fprintf(stderr, "out of memory\n"); 
-				exit(1);
-			}
-			(*my_handler)();	//´¦ÀíÀı³Ì
-			temp=malloc(n);	//ÔÙ³¢ÊÔ
-			if(temp) return temp;//³É¹¦
+			fprintf(stderr, "out of memory\n"); 
+			exit(1);
 		}
+		(*my_handler)();	//å¤„ç†ä¾‹ç¨‹
+		temp=malloc(n);	//å†å°è¯•
+		if(temp) return temp;//æˆåŠŸ
 	}
-	//´¦ÀíhandlerÓÃmallocµÄ¾ÍĞĞÁË
-	void * _malloc_alloc::_handle_oom_realloc(void* p,size_t n)
+}
+//å¤„ç†handlerç”¨mallocçš„å°±è¡Œäº†
+template<class T>
+void * malloc_alloc<T>::oom_realloc(void* p,size_t n)
+{
+	void (*my_handler)();
+	void *temp;
+	while(1)
 	{
-		void (*my_handler)();
-		void *temp;
-		while(1)
+		my_handler=_malloc_handler;
+		if(my_handler==0)//ç”¨æˆ·æ²¡è®¾å®š
 		{
-			my_handler=_malloc_handler;
-			if(my_handler==0)//ÓÃ»§Ã»Éè¶¨
-			{
-				fprintf(stderr, "out of memory\n"); 
-				exit(1);
-			}
-			(*my_handler)();	//´¦ÀíÀı³Ì
-			temp=realloc(p,n);	//ÔÙ³¢ÊÔ
-			if(temp) return temp;//³É¹¦
+			fprintf(stderr, "out of memory\n"); 
+			exit(1);
 		}
+		(*my_handler)();	//å¤„ç†ä¾‹ç¨‹
+		temp=realloc(p,n);	//å†å°è¯•
+		if(temp) return temp;//æˆåŠŸ
 	}
-	typedef _malloc_alloc malloc_alloc;
-	typedef _malloc_alloc Alloc;
-}//end of namespcae numb
+}
+
+
+///voidç‰ˆçš„
+template<> class malloc_alloc<void>
+{
+  typedef void        value_type;
+  typedef void*       pointer;
+  typedef const void* const_pointer;
+
+  template <class U> 
+  struct rebind { typedef malloc_alloc<U> other; };
+};
+template <class T>
+inline bool operator==(const malloc_alloc<T>&, 
+                       const malloc_alloc<T>&) {
+  return true;
+}
+
+template <class T>
+inline bool operator!=(const malloc_alloc<T>&, 
+                       const malloc_alloc<T>&) {
+  return false;
+}
+}
 #endif

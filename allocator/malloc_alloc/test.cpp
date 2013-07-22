@@ -1,12 +1,11 @@
-#include "allocator.h"
+#include "malloc_alloc.h"
 #include <iostream>
 #include <vector>
 #include <list>
 #include <ctime>
 #include <cstdio>
 #include <cstdlib>
-//typedef __gnu_cxx::malloc_allocator<int> alloc;
-typedef numb::allocator<int> alloc;
+typedef numb::malloc_alloc<int> alloc;
 clock_t start, finish;
 int testcase;
 void test1()
@@ -27,18 +26,13 @@ void test2()
 {
 	//for list
 	std::list<int,alloc> IL;
-	int *p;
+	//int *p;
 	std::cout<<"my allocator:\n";
 	std::cout<<"list:\n";
 	start=clock();
-		// for(int i=0;i!=testcase;i++)
-		// {
-			// IL.push_back(i);
-		// }
-		p=IL.get_allocator().allocate(testcase);
 		for(int i=0;i!=testcase;i++)
 		{
-			p[i]=i;
+			IL.push_back(i);
 		}
 	finish=clock();
 	std::cout<<testcase<<" int in:"<<(double)(finish-start)<<"\n";
@@ -66,26 +60,26 @@ void test4()
 	std::cout<<"list:\n";
 	int *p;
 	start=clock();
-		// for(int i=0;i!=testcase;i++)
-		// {
-			// L.push_back(i);
-		// }
-		p=L.get_allocator().allocate(testcase);
 		for(int i=0;i!=testcase;i++)
 		{
-			p[i]=i;
+			L.push_back(i);
 		}
 	finish=clock();
 	std::cout<<testcase<<"int in:"<<(double)(finish-start)<<"\n";
   
 }
+void p()
+{
+	std::cout<<"sorry,I've try my best!";
+	exit(1);
+}
 int main ()
 {
 	std::cin>>testcase;
-	
-	//test1();
-	//test2();
-	//test3();
-	//test4();
- return 0;
+	//alloc::set_malloc_handler (p);
+	test1();
+	// test2();
+	// test3();
+	// test4();
+	return 0;
 }
