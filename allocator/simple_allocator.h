@@ -12,7 +12,7 @@
 #include <cstddef>	//for ptrdiff_t,size_t
 #include <cstdlib>	//for exit()
 #include <climits>	//for UNIT_MAX
-#include <iostream>	//for cerr
+#include <cstdio>	//for stderr
 namespace numb
 {
 	//分配内存
@@ -20,11 +20,11 @@ namespace numb
 	inline T* _allocate(ptrdiff_t size,T*)
 	{
 		std::set_new_handler (0);//设定new_handle为0
-		T* temp=(T*)(::operator new((size_t)(size*sizeof(T))));//分配size个T类型的内存
+		T* temp=static_cast<T*>(::operator new((size_t)(size*sizeof(T))));//分配size个T类型的内存
 		if(temp==0)
 		{
-			std::cerr<<"Out of Memory!"<<std::endl;
-			exit(0);
+			fprintf(stderr, "out of memory\n"); 
+			exit(1);
 		}
 		return temp;
 	}
@@ -38,7 +38,7 @@ namespace numb
 	template <class T1,class T2>
 	inline void _construct(T1* p,const T2& value)
 	{
-		new(p) T1(value);	//只调用构造函数，不分配内存，p内存已分配好
+		::new(p) T1(value);	//只调用构造函数，不分配内存，p内存已分配好
 	}	
 	//析构对象
 	template <class T>
@@ -112,5 +112,31 @@ namespace numb
 				return size_type(UINT_MAX/sizeof(T));
 			}
 	};	//end of class allocator
+	
+	template<typename Tp>
+	inline bool
+    operator==(const simple_allocator<Tp>&, const simple_allocator<_Tp>&)
+    { return true; }
+  
+    template<typename Tp>
+    inline bool
+    operator!=(const simple_allocator<Tp>&, const simple_allocator<Tp>&)
+    { return false; }
+	
+  /// allocator<void> specialization.
+    template<>
+    class simple_allocator<void>
+    {
+    public:
+      typedef size_t      size_type;
+      typedef ptrdiff_t   difference_type;
+      typedef void*       pointer;
+      typedef const void* const_pointer;
+      typedef void        value_type;
+
+      template<typename T>
+        struct rebind
+        { typedef simple_allocator<T> other; };
+    };
 }//end of namespcae numb
 #endif

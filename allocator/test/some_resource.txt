@@ -1,3 +1,4 @@
+http://www.codeproject.com/Articles/15527/C-Memory-Pool
 https://unbui.lt/#!/posts/cpp-memory-pools
 http://stackoverflow.com/questions/16378306/c11-memory-pool-design-pattern
 http://blog.csdn.net/gaa_ra/article/details/7882753

@@ -58,7 +58,6 @@ void test4()
 	std::list<int> L;
 	std::cout<<"std allocator:\n";
 	std::cout<<"list:\n";
-	int *p;
 	start=clock();
 		for(int i=0;i!=testcase;i++)
 		{
@@ -77,9 +76,9 @@ int main ()
 {
 	std::cin>>testcase;
 	//alloc::set_malloc_handler (p);
-	test1();
-	// test2();
-	// test3();
-	// test4();
+	//test1();
+	//test2();
+	//test3();
+	//test4();
 	return 0;
 }
