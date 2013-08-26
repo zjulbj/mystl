@@ -1,7 +1,7 @@
 MySTL--A simple version of STL
 =====
 
-For details: [http://zjulbj.github.io/categories.html](http://zjulbj.github.io/categories.html)
+For details: [http://zjulbj.github.io/categories.html#stl-ref](http://zjulbj.github.io/categories.html#stl-ref "http://zjulbj.github.io/categories.html#stl-ref")
 
 ##Goals
 
@@ -25,17 +25,17 @@ For details: [http://zjulbj.github.io/categories.html](http://zjulbj.github.io/c
 
 ##Categories
 
-- [mystl](tree/master/mystl "tree/master/mystl")
-	- [memory](blob/master/mystl/memory "blob/master/mystl/memory")		(使用memory需要包含文件)
-	- [iterator](blob/master/mystl/iterator "blob/master/mystl/iterator")	(使用iterator的实现及需要包含文件)
-	- [vector](blob/master/mystl/vector "blob/master/mystl/vector")		(使用vector需要包含文件)
-	- [stl_impl](tree/master/mystl/stl_impl "tree/master/mystl/stl_impl")	(各种实现文件)
-		- [allocator.h](blob/master/mystl/stl_impl/allocator.h "blob/master/mystl/stl_impl/allocator.h")
-		- [malloc_alloc.h](blob/master/mystl/stl_impl/malloc_alloc.h "blob/master/mystl/stl_impl/malloc_alloc.h")
-		- [pool_alloc.h](blob/master/mystl/stl_impl/pool_alloc.h "blob/master/mystl/stl_impl/pool_alloc.h")
-		- [iterator_base.h](blob/master/mystl/stl_impl/iterator_base.h "blob/master/mystl/stl_impl/iterator_base.h")
-		- [stl_iterator.h](blob/master/mystl/stl_impl/stl_iterator.h "blob/master/mystl/stl_impl/stl_iterator.h")
-		- [sti_vector.h](blob/master/mystl/stl_impl/sti_vector.h "blob/master/mystl/stl_impl/sti_vector.h")
+- [mystl](../tree/master/mystl "../tree/master/mystl")
+	- [memory](mystl/memory "mystl/memory")		(使用memory需要包含文件)
+	- [iterator](mystl/iterator "mystl/iterator")	(使用iterator的实现及需要包含文件)
+	- [vector](mystl/vector "mystl/vector")		(使用vector需要包含文件)
+	- [stl_impl](../tree/master/mystl/stl_impl "../tree/master/mystl/stl_impl")	(各种实现文件)
+		- [allocator.h](mystl/stl_impl/allocator.h "mystl/stl_impl/allocator.h")
+		- [malloc_alloc.h](mystl/stl_impl/malloc_alloc.h "/mystl/stl_impl/malloc_alloc.h")
+		- [pool_alloc.h]( /mystl/stl_impl/pool_alloc.h "/mystl/stl_impl/pool_alloc.h")
+		- [iterator_base.h](mystl/stl_impl/iterator_base.h "mystl/stl_impl/iterator_base.h")
+		- [stl_iterator.h](mystl/stl_impl/stl_iterator.h "mystl/stl_impl/stl_iterator.h")
+		- [sti_vector.h](/mystl/stl_impl/sti_vector.h "mystl/stl_impl/sti_vector.h")
 	
 
 ##项目简介
