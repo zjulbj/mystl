@@ -12,11 +12,10 @@
  *and advance().
  */
 #ifndef _MITERATOR_BASE_H
-#define _MITERATOR_BASE_H
-#include<cassert> //for debug
+#define _MITERATOR_BASE_H 1
 namespace numb
 {
-	using std::ptrdiff_t;
+
 /*	Abstructions for uniform iterator,
  *	general iterator-related utility types
  */

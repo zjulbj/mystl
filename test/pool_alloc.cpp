@@ -1,4 +1,4 @@
-#include "pool_alloc.h"
+#include "../mystl/memory"
 #include <iostream>
 #include <vector>
 #include <list>
@@ -76,9 +76,9 @@ int main ()
 {
 	std::cin>>testcase;
 	//alloc::set_malloc_handler (p);
-	//test1();
-	//test2();
-	//test3();
+	test1();
+	test2();
+	test3();
 	test4();
 	return 0;
 }

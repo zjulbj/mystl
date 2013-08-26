@@ -9,10 +9,6 @@
 #ifndef _MALLOCATOR_H
 #define _MALLOCATOR_H
 #include <new>		//for placement new
-#include <cstddef>	//for ptrdiff_t,size_t
-#include <cstdlib>	//for exit()
-#include <climits>	//for UNIT_MAX
-#include <cstdio>	//for stderr
 namespace numb
 {
 	//分配内存
@@ -23,8 +19,7 @@ namespace numb
 		T* temp=static_cast<T*>(::operator new((size_t)(size*sizeof(T))));//分配size个T类型的内存
 		if(temp==0)
 		{
-			fprintf(stderr, "out of memory\n"); 
-			exit(1);
+			throw std::bad_alloc();
 		}
 		return temp;
 	}
@@ -54,7 +49,7 @@ namespace numb
 		public:
 			//7个基本的内部类型
 			typedef T 			value_type;
-			typedef	T* 			pointer;
+			typedef	 T* 			pointer;
 			typedef const T* 	const_pointer;
 			typedef T&			reference;
 			typedef const T&	const_reference;
@@ -109,23 +104,23 @@ namespace numb
 			//返回能够分配的最大内存
 			size_type max_size()const
 			{
-				return size_type(UINT_MAX/sizeof(T));
+				return static_cast<size_type>(-1) / sizeof(T);
 			}
 	};	//end of class allocator
 	
 	template<typename Tp>
 	inline bool
-    operator==(const simple_allocator<Tp>&, const simple_allocator<_Tp>&)
+    operator==(const allocator<Tp>&, const allocator<Tp>&)
     { return true; }
   
     template<typename Tp>
     inline bool
-    operator!=(const simple_allocator<Tp>&, const simple_allocator<Tp>&)
+    operator!=(const allocator<Tp>&, const allocator<Tp>&)
     { return false; }
 	
   /// allocator<void> specialization.
     template<>
-    class simple_allocator<void>
+    class allocator<void>
     {
     public:
       typedef size_t      size_type;
@@ -136,7 +131,7 @@ namespace numb
 
       template<typename T>
         struct rebind
-        { typedef simple_allocator<T> other; };
+        { typedef allocator<T> other; };
     };
 }//end of namespcae numb
 #endif

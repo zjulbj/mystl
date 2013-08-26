@@ -1,0 +1,10 @@
+#ifndef _NUMB_VECTOR
+#define _NUMB_VECTOR 1
+#include <bits/stl_construct.h>		//to do
+#include <bits/stl_uninitialized.h>	//to do
+#include <stdexcept>
+#include "stl_impl/allocator.h"
+#include "iterator"
+#include "stl_impl/stl_vector.h"
+#endif /* _NUMB_VECTOR */
+

@@ -7,10 +7,6 @@
 //============================================================================
 #ifndef _mpool_alloc_H
 #define	_mpool_alloc_H
-#include <cstddef>	//for size_t
-#include <cstdlib>	//for malloc,dealloc,etc.
-#include <cstdio>	//for stderr
-#include <new>		//for placement new
 #include "malloc_alloc.h"	//malloc_alloc
 namespace numb{
   /**  
@@ -25,8 +21,6 @@ namespace numb{
    *     information that we can return the object to the proper free list
    *     without permanently losing part of the object.
    */
-   using std::size_t;
-   using std::ptrdiff_t;
    //memory pool allocator的一种实现
    //与STL标准接轨
    template<typename T>
@@ -140,8 +134,7 @@ namespace numb{
 		  }
 		   if (ret == 0)
 		   {
-			  fprintf(stderr, "out of memory\n"); 
-			  exit(1);
+			  throw std::bad_alloc();
 		   }
 		}
 		return ret;

@@ -1,4 +1,4 @@
-#include "malloc_alloc.h"
+#include "../mystl/memory"
 #include <iostream>
 #include <vector>
 #include <list>
@@ -75,10 +75,10 @@ void p()
 int main ()
 {
 	std::cin>>testcase;
-	//alloc::set_malloc_handler (p);
-	//test1();
-	//test2();
-	//test3();
-	//test4();
+	alloc::set_malloc_handler (p);
+	test1();
+	test2();
+	test3();
+	test4();
 	return 0;
 }

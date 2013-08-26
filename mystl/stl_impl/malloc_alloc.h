@@ -7,10 +7,7 @@
 //============================================================================
 #ifndef _mmalloc_alloc_H
 #define	_mmalloc_alloc_H
-#include <cstddef>	//for size_t
-#include <cstdlib>	//for malloc,dealloc,etc.
-#include <cstdio>	//for stderr
-#include <new>		//for placement new
+#include <cstdlib>	//for malloc,free,etc.
 namespace numb
 {
 template <class T> class malloc_alloc
@@ -100,8 +97,7 @@ void * malloc_alloc<T>::oom_malloc(size_t n)
 		my_handler=_malloc_handler;
 		if(my_handler==0)//用户没设定
 		{
-			fprintf(stderr, "out of memory\n"); 
-			exit(1);
+			throw std::bad_alloc();
 		}
 		(*my_handler)();	//处理例程
 		temp=malloc(n);	//再尝试
@@ -119,8 +115,7 @@ void * malloc_alloc<T>::oom_realloc(void* p,size_t n)
 		my_handler=_malloc_handler;
 		if(my_handler==0)//用户没设定
 		{
-			fprintf(stderr, "out of memory\n"); 
-			exit(1);
+			throw std::bad_alloc();
 		}
 		(*my_handler)();	//处理例程
 		temp=realloc(p,n);	//再尝试
