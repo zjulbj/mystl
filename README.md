@@ -6,7 +6,7 @@ For details: [http://zjulbj.github.io/categories.html](http://zjulbj.github.io/c
 ##Goals
 
 - Simple version of STL.
-	
+    
 	- Referring from SGI STL and GNU C++ STL
 	
 	- Support main functions of ISO STL
@@ -22,6 +22,21 @@ For details: [http://zjulbj.github.io/categories.html](http://zjulbj.github.io/c
 - In strict accordance with ISO C++
 
 - Reffer to GNU C++ STL
+
+##Categories
+
+- [mystl](tree/master/mystl "tree/master/mystl")
+	- [memory](blob/master/mystl/memory "blob/master/mystl/memory")		(使用memory需要包含文件)
+	- [iterator](blob/master/mystl/iterator "blob/master/mystl/iterator")	(使用iterator的实现及需要包含文件)
+	- [vector](blob/master/mystl/vector "blob/master/mystl/vector")		(使用vector需要包含文件)
+	- [stl_impl](tree/master/mystl/stl_impl "tree/master/mystl/stl_impl")	(各种实现文件)
+		- [allocator.h](blob/master/mystl/stl_impl/allocator.h "blob/master/mystl/stl_impl/allocator.h")
+		- [malloc_alloc.h](blob/master/mystl/stl_impl/malloc_alloc.h "blob/master/mystl/stl_impl/malloc_alloc.h")
+		- [pool_alloc.h](blob/master/mystl/stl_impl/pool_alloc.h "blob/master/mystl/stl_impl/pool_alloc.h")
+		- [iterator_base.h](blob/master/mystl/stl_impl/iterator_base.h "blob/master/mystl/stl_impl/iterator_base.h")
+		- [stl_iterator.h](blob/master/mystl/stl_impl/stl_iterator.h "blob/master/mystl/stl_impl/stl_iterator.h")
+		- [sti_vector.h](blob/master/mystl/stl_impl/sti_vector.h "blob/master/mystl/stl_impl/sti_vector.h")
+	
 
 ##项目简介
 主要参考SGI,gnu g++版的STL,重构一个自己的STL。
