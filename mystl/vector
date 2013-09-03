@@ -1,5 +1,6 @@
 #ifndef _NUMB_VECTOR
 #define _NUMB_VECTOR 1
+#include <bits/stl_algobase.h>
 #include <bits/stl_construct.h>		//to do
 #include <bits/stl_uninitialized.h>	//to do
 #include <stdexcept>

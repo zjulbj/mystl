@@ -3,5 +3,5 @@
 #include "stl_impl/iterator_base.h"
 #include "stl_impl/stl_iterator.h"
 #include <cassert> //for debug
-#endif /* _NUMB_VECTOR */
+#endif /* _NUMB_ITERATOR */
 
