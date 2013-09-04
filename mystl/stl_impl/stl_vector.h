@@ -534,6 +534,58 @@ namespace numb
 		}
 	};//end of vector
 
-	//to do: vector equality comparisons.
+	// vector equality comparisons.
+	template<typename Tp, typename Alloc>
+    inline bool
+    operator==(const vector<Tp, Alloc>& x, const vector<Tp, Alloc>& y)
+    { return (x.size() == y.size()
+	      && std::equal(x.begin(), x.end(),y.begin())); }
+
+  /**
+   *  @brief  Vector ordering relation.
+   *  @param  __x  A %vector.
+   *  @param  __y  A %vector of the same type as @a __x.
+   *  @return  True iff @a __x is lexicographically less than @a __y.
+   *
+   *  This is a total ordering relation.  It is linear in the size of the
+   *  vectors.  The elements must be comparable with @c <.
+   *
+   *  See std::lexicographical_compare() for how the determination is made.
+  */
+  template<typename Tp, typename Alloc>
+    inline bool
+    operator<(const vector<Tp, Alloc>& x, const vector<Tp, Alloc>& y)
+    { return std::lexicographical_compare(x.begin(), x.end(),
+					  y.begin(), y.end()); }
+
+  /// Based on operator==
+  template<typename Tp, typename Alloc>
+    inline bool
+    operator!=(const vector<Tp, Alloc>& x, const vector<Tp, Alloc>& y)
+    { return !(x == y); }
+
+  /// Based on operator<
+  template<typename _Tp, typename _Alloc>
+    inline bool
+    operator>(const vector<Tp, Alloc>& x, const vector<Tp, Alloc>& y)
+    { return y < x; }
+
+  /// Based on operator<
+  template<typename Tp, typename Alloc>
+    inline bool
+    operator<=(const vector<Tp, Alloc>& x, const vector<Tp,Alloc>&y)
+    { return !(y < x); }
+
+  /// Based on operator<
+  template<typename Tp, typename Alloc>
+    inline bool
+    operator>=(const vector<Tp, Alloc>& x, const vector<Tp, Alloc>& y)
+    { return !(x < y); }
+
+  /// See std::vector::swap().
+  template<typename Tp, typename Alloc>
+    inline void
+    swap(vector<Tp, Alloc>& x, vector<Tp, Alloc>& y)
+    { x.swap(y); }
  }//end of namespace
  #endif
