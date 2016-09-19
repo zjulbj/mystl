@@ -29,7 +29,7 @@ For details: [http://zjulbj.github.io/categories.html#stl-ref](http://zjulbj.git
 	- [memory](mystl/memory "mystl/memory")		
 	- [iterator](mystl/iterator "mystl/iterator")	
 	- [vector](mystl/vector "mystl/vector")	
-	- [stl_impl](https://github.com/zjulbj/mystl/tree/master/mystl/stl_impl "https://github.com/zjulbj/mystl/tree/master/mystl/stl_impl")	(各种实现文件)
+	- [stl_impl](https://github.com/zjulbj/mystl/tree/master/mystl/stl_impl "https://github.com/zjulbj/mystl/tree/master/mystl/stl_impl")
 		- [allocator.h](mystl/stl_impl/allocator.h "mystl/stl_impl/allocator.h")
 		- [malloc_alloc.h](mystl/stl_impl/malloc_alloc.h "/mystl/stl_impl/malloc_alloc.h")
 		- [pool_alloc.h]( /mystl/stl_impl/pool_alloc.h "/mystl/stl_impl/pool_alloc.h")
