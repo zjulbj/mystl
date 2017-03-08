@@ -1,7 +1,7 @@
 MySTL--A simple version of STL
 =====
 
-For details: [http://zjulbj.github.io/categories.html#stl-ref](http://zjulbj.github.io/categories.html#stl-ref "http://zjulbj.github.io/categories.html#stl-ref")
+For details: [http://blog.lbj.one/article/7](http://blog.lbj.one/article/7)
 
 ##Goals
 
